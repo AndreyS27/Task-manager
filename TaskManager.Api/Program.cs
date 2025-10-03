@@ -18,6 +18,7 @@ var jwtSettings = builder.Configuration.GetSection("Jwt");
 builder.Services.Configure<JwtSettings>(jwtSettings);
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<PasswordService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -17,8 +17,10 @@ namespace TaskManager.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<AuthResponseDto>> Register(RegisterDto dto)
+        public async Task<ActionResult<AuthResponseDto>> Register([FromBody] RegisterDto dto)
         {
+            if (dto == null)
+                return BadRequest("DTO is null. Check JSON format and Content-Type."); // убрать
             try
             {
                 var response = await _authService.RegisterAsync(dto);
@@ -31,16 +33,17 @@ namespace TaskManager.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AuthResponseDto>> Login(LoginDto dto)
+        public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto dto)
         {
             try
             {
                 var response = await _authService.LoginAsync(dto);
                 return Ok(response);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
     }
 }

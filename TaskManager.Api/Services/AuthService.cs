@@ -15,10 +15,11 @@ namespace TaskManager.Api.Services
         private readonly IConfiguration _config;
         private readonly PasswordService _passwordService;
 
-        public AuthService(ApplicationDbContext context, IConfiguration config)
+        public AuthService(ApplicationDbContext context, IConfiguration config, PasswordService passwordService)
         {
             _config = config;
             _context = context;
+            _passwordService = passwordService;
         }
 
         public async Task<AuthResponseDto> RegisterAsync(RegisterDto dto)

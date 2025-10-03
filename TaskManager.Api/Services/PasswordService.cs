@@ -9,12 +9,12 @@ namespace TaskManager.Api.Services
 
         public string HashPassword(string password)
         {
-            return _passwordHasher.HashPassword(null, password);
+            return _passwordHasher.HashPassword(null!, password);
         }
 
         public bool VerifyPassword(string password, string hash)
         {
-            var result = _passwordHasher.VerifyHashedPassword(null, hash, password);
+            var result = _passwordHasher.VerifyHashedPassword(null!, hash, password);
             return result == PasswordVerificationResult.Success;
         }
     }
