@@ -19,8 +19,6 @@ namespace TaskManager.Api.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<AuthResponseDto>> Register([FromBody] RegisterDto dto)
         {
-            if (dto == null)
-                return BadRequest("DTO is null. Check JSON format and Content-Type."); // убрать
             try
             {
                 var response = await _authService.RegisterAsync(dto);
