@@ -36,18 +36,19 @@ namespace TaskManager.Api.Services
             };
         }
 
-        public async Task DeleteAsync(int todoId, int userId)
+        public async Task<bool> DeleteAsync(int todoId, int userId)
         {
             var todoItem = await _context.TodoItems
                 .FirstOrDefaultAsync(t => t.Id == todoId && t.UserId == userId);
 
             if (todoItem == null)
             {
-                throw new Exception("Task not found or access denied");
+                return false;
             }
 
             _context.TodoItems.Remove(todoItem);
             await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<List<TodoItemDto>> GetByUserIdAsync(int userId)
@@ -65,14 +66,34 @@ namespace TaskManager.Api.Services
                 .ToListAsync();
         }
 
-        public async Task<TodoItemDto> UpdateAsync(int todoId, UpdateTodoDto dto, int userId)
+        public async Task<TodoItemDto?> GetByIdAsync(int todoId, int userId)
         {
             var todoItem = await _context.TodoItems
                 .FirstOrDefaultAsync(t => t.Id == todoId && t.UserId == userId);
 
             if (todoItem == null)
             {
-                throw new Exception("Task not found or access denied");
+                return null;
+            }
+
+            return new TodoItemDto
+            {
+                Id = todoItem.Id,
+                Title = todoItem.Title,
+                Description = todoItem.Description,
+                IsCompleted = todoItem.IsCompleted,
+                CreatedAt = todoItem.CreatedAt
+            };
+        }
+
+        public async Task<TodoItemDto?> UpdateAsync(int todoId, UpdateTodoDto dto, int userId)
+        {
+            var todoItem = await _context.TodoItems
+                .FirstOrDefaultAsync(t => t.Id == todoId && t.UserId == userId);
+
+            if (todoItem == null)
+            {
+                return null;
             }
 
             if (!String.IsNullOrEmpty(dto.Title))
