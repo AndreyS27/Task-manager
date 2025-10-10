@@ -40,6 +40,47 @@ document.getElementById('register-btn').addEventListener('click', async () => {
     }
 });
 
+// Показать модальное окно
+document.getElementById('add-task').addEventListener('click', () => {
+    document.getElementById('add-task-modal').style.display = 'block';
+    document.getElementById('new-task-title').value = '';
+    document.getElementById('new-task-description').value = '';
+});
+
+// Скрыть модальное окно
+document.getElementById('cancel-add').addEventListener('click', () => {
+    document.getElementById('add-task-modal').style.display = 'none';
+});
+
+// Сохранить новую задачу
+document.getElementById('save-task').addEventListener('click', async () => {
+    const title = document.getElementById('new-task-title').value.trim();
+    if (!title){
+        alert('Название задачи обязательно!');
+        return;
+    }
+
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${API_BASE}/todo`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: title,
+            description: document.getElementById('new-task-description').value || null
+        })
+    });
+
+    if (res.ok) {
+        document.getElementById('add-task-modal').style.display = 'none';
+        loadTasks();
+    } else {
+        alert('Ошибка при создании задачи');
+    }
+});
+
 function showApp() {
     document.getElementById('auth-form').style.display = 'none';
     document.getElementById('app').style.display = 'block';
@@ -60,7 +101,11 @@ async function loadTasks() {
         tasksList.innerHTML = '<p>Список задач пуст</p>';
     } else {
         tasksList.innerHTML = tasks.map(t =>
-            `<div><strong>${t.title}</strong> - ${t.description || ''} (${t.isCompleted ? 'Выполнено' : 'Выполняется'})</div>`
+            `<div class='todo-container' todo-id="${t.id}">
+            <strong>${t.title}</strong> - ${t.description || ''} (${t.isCompleted ? 'Выполнено' : 'Выполняется'})
+            <button id='update-todo'>Изменить</button>
+            <button id='update-todo'>Удалить</button>
+            </div>`
         ).join('');
     }
 }
