@@ -40,14 +40,14 @@ document.getElementById('register-btn').addEventListener('click', async () => {
     }
 });
 
-// Показать модальное окно
+// Показать модальное окно добавления задачи
 document.getElementById('add-task').addEventListener('click', () => {
     document.getElementById('add-task-modal').style.display = 'block';
     document.getElementById('new-task-title').value = '';
     document.getElementById('new-task-description').value = '';
 });
 
-// Скрыть модальное окно
+// Скрыть модальное окно добавления задачи
 document.getElementById('cancel-add').addEventListener('click', () => {
     document.getElementById('add-task-modal').style.display = 'none';
 });
@@ -101,14 +101,41 @@ async function loadTasks() {
         tasksList.innerHTML = '<p>Список задач пуст</p>';
     } else {
         tasksList.innerHTML = tasks.map(t =>
-            `<div class='todo-container' todo-id="${t.id}">
-            <strong>${t.title}</strong> - ${t.description || ''} (${t.isCompleted ? 'Выполнено' : 'Выполняется'})
-            <button id='update-todo'>Изменить</button>
-            <button id='update-todo'>Удалить</button>
+            `<div class='todo-container' data-id="${t.id}">
+                <strong>${t.title}</strong> - ${t.description || ''} (${t.isCompleted ? 'Выполнено' : 'Выполняется'})
+                <button class='update-todo'>Изменить</button>
+                <button class='delete-todo'>Удалить</button>
             </div>`
         ).join('');
     }
 }
+
+document.getElementById('tasks-list').addEventListener('click', async (e) => {
+    const container = e.target.closest('.todo-container');
+    if (!container) return;
+
+    const taskId = container.dataset.id;
+
+    if (e.target.classList.contains('delete-todo')){
+        if (!confirm('Удалить задачу?')) return;
+
+        const token = localStorage.getItem('token');
+        const res = await fetch(`${API_BASE}/todo/${taskId}`, {
+            method: 'DELETE',
+            headers: {'Authorization': `Bearer ${token}`}
+        });
+
+        if (res.ok) {
+            loadTasks();
+        } else {
+            alert('Ошибка удаления');
+        }
+    }
+
+    if (e.target.classList.contains('update-todo')){
+        alert('Редактирование задачи пока не реализовано')
+    }
+})
 
 if (localStorage.getItem('token')){
     showApp();
