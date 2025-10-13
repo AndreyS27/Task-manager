@@ -1,4 +1,6 @@
 const API_BASE = 'https://localhost:7037/api';
+let currentTaskId = null;
+let tasks = [];
 
 document.getElementById('login-btn').addEventListener('click', async () => {
     const email = document.getElementById('email').value;
@@ -6,8 +8,8 @@ document.getElementById('login-btn').addEventListener('click', async () => {
 
     const res = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email, password})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
     });
 
     if (res.ok) {
@@ -26,8 +28,8 @@ document.getElementById('register-btn').addEventListener('click', async () => {
 
     const res = await fetch(`${API_BASE}/auth/register`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email, password})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
     });
 
     if (res.ok) {
@@ -51,11 +53,16 @@ document.getElementById('add-task').addEventListener('click', () => {
 document.getElementById('cancel-add').addEventListener('click', () => {
     document.getElementById('add-task-modal').style.display = 'none';
 });
+// Скрыть модальное окно обновления задачи
+document.getElementById('cancel-changes').addEventListener('click', () => {
+    document.getElementById('change-task-modal').style.display = 'none';
+    currentTaskId = null;
+});
 
 // Сохранить новую задачу
 document.getElementById('save-task').addEventListener('click', async () => {
     const title = document.getElementById('new-task-title').value.trim();
-    if (!title){
+    if (!title) {
         alert('Название задачи обязательно!');
         return;
     }
@@ -81,6 +88,83 @@ document.getElementById('save-task').addEventListener('click', async () => {
     }
 });
 
+
+// Обработчик кнопок элементов в tasks-list
+document.getElementById('tasks-list').addEventListener('click', async (e) => {
+    const container = e.target.closest('.todo-container');
+    if (!container) return;
+
+    const taskId = container.dataset.id;
+
+    if (e.target.classList.contains('delete-todo')) {
+        if (!confirm('Удалить задачу?')) return;
+
+        const token = localStorage.getItem('token');
+        const res = await fetch(`${API_BASE}/todo/${taskId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (res.ok) {
+            loadTasks();
+        } else {
+            alert('Ошибка удаления');
+        }
+    }
+
+    // Показать модальное окно для редактирования задачи
+    if (e.target.classList.contains('update-todo')) {
+        const taskId = container.dataset.id;
+        const task = tasks.find(t => t.id == taskId);
+
+        if (task) {
+            document.getElementById('updated-title').value = task.title;
+            document.getElementById('updated-description').value = task.description || '';
+            document.getElementById('task-status').checked = task.isCompleted;
+        }
+
+        currentTaskId = taskId;
+
+        document.getElementById('change-task-modal').style.display = 'block';
+    }
+})
+
+// Сохранить измененную задачу
+document.getElementById('save-changes').addEventListener('click', async () => {
+    if (!currentTaskId) return;
+
+    const title = document.getElementById('updated-title').value.trim();
+    if (!title) {
+        alert('Заполните название задачи!');
+        return;
+    }
+
+    const token = localStorage.getItem('token');
+    const updateData = {
+        title: title,
+        description: document.getElementById('updated-description').value || null,
+        isCompleted: document.getElementById('task-status').checked
+    };
+
+    const res = await fetch(`${API_BASE}/todo/${currentTaskId}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updateData)
+    });
+
+    if (res.ok) {
+        document.getElementById('change-task-modal').style.display = 'none';
+        currentTaskId = null;
+        loadTasks();
+    } else {
+        alert('Ошибка при обновлении задачи');
+    }
+})
+
+
 function showApp() {
     document.getElementById('auth-form').style.display = 'none';
     document.getElementById('app').style.display = 'block';
@@ -91,10 +175,10 @@ function showApp() {
 async function loadTasks() {
     const token = localStorage.getItem('token');
     const res = await fetch(`${API_BASE}/todo`, {
-        headers: {'Authorization': `Bearer ${token}`}
+        headers: { 'Authorization': `Bearer ${token}` }
     });
 
-    const tasks = await res.json();
+    tasks = await res.json();
     const tasksList = document.getElementById('tasks-list');
 
     if (tasks.length === 0) {
@@ -110,33 +194,6 @@ async function loadTasks() {
     }
 }
 
-document.getElementById('tasks-list').addEventListener('click', async (e) => {
-    const container = e.target.closest('.todo-container');
-    if (!container) return;
-
-    const taskId = container.dataset.id;
-
-    if (e.target.classList.contains('delete-todo')){
-        if (!confirm('Удалить задачу?')) return;
-
-        const token = localStorage.getItem('token');
-        const res = await fetch(`${API_BASE}/todo/${taskId}`, {
-            method: 'DELETE',
-            headers: {'Authorization': `Bearer ${token}`}
-        });
-
-        if (res.ok) {
-            loadTasks();
-        } else {
-            alert('Ошибка удаления');
-        }
-    }
-
-    if (e.target.classList.contains('update-todo')){
-        alert('Редактирование задачи пока не реализовано')
-    }
-})
-
-if (localStorage.getItem('token')){
+if (localStorage.getItem('token')) {
     showApp();
 }

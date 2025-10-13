@@ -46,6 +46,21 @@
         </div>
      </div>
 
+     <!-- Модальное окно для обновления задачи -->
+      <div id="change-task-modal">
+        <div class="change-task-fields">
+            <h3>Изменить данные задачи</h3>
+            <label for="updated-title">Название задачи</label>
+            <input type="text" id="updated-title" required>
+            <label for="updated-description">Описание (необязательно)</label>
+            <textarea id="updated-description" rows="3"></textarea>
+            <label for="task-status">Выполнено</label>
+            <input type="checkbox" id="task-status">
+            <button id="save-changes">Сохранить</button>
+            <button id="cancel-changes">Отмена</button>
+        </div>
+      </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>
