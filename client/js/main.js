@@ -59,6 +59,13 @@ document.getElementById('cancel-changes').addEventListener('click', () => {
     currentTaskId = null;
 });
 
+// кнопка выхода
+document.getElementById('logout').addEventListener('click', () => {
+    localStorage.clear();
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('auth-form').style.display = 'flex';
+})
+
 // Сохранить новую задачу
 document.getElementById('save-task').addEventListener('click', async () => {
     const title = document.getElementById('new-task-title').value.trim();
@@ -142,7 +149,7 @@ document.getElementById('save-changes').addEventListener('click', async () => {
     const token = localStorage.getItem('token');
     const updateData = {
         title: title,
-        description: document.getElementById('updated-description').value || null,
+        description: document.getElementById('updated-description').value,
         isCompleted: document.getElementById('task-status').checked
     };
 
@@ -186,7 +193,9 @@ async function loadTasks() {
     } else {
         tasksList.innerHTML = tasks.map(t =>
             `<div class='todo-container' data-id="${t.id}">
-                <strong>${t.title}</strong> - ${t.description || ''} (${t.isCompleted ? 'Выполнено' : 'Выполняется'})
+                <strong>${t.title}</strong> 
+                ${t.description || ''} <br>
+                ${t.isCompleted ? 'Выполнено' : 'Выполняется'}
                 <button class='update-todo'>Изменить</button>
                 <button class='delete-todo'>Удалить</button>
             </div>`
