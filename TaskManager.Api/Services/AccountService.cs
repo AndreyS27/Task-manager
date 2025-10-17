@@ -14,8 +14,8 @@ namespace TaskManager.Api.Services
 
         public async Task<string> UploadAvatarAsync(int userId, IFormFile file)
         {
-            if (file == null || file.Length == 0)
-                throw new ArgumentException("File is empty or null");
+            //if (file == null || file.Length == 0)
+            //    throw new ArgumentException("File is empty or null");
 
             // генерация уникального имени файла
             var fileExtenstion = Path.GetExtension(file.FileName).ToLower();
