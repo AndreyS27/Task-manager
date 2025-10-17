@@ -51,7 +51,5 @@ namespace TaskManager.Api.Services
             var user = await _context.Users.FindAsync(userId);
             return user?.AvatarPath;
         }
-
-        
     }
 }
