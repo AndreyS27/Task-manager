@@ -211,13 +211,14 @@ async function loadAvatar() {
     });
 
     if (res.ok) {
-        const avatarPath = await res.json(); // путь или null
+        const data = await res.json(); // путь или null
+        const avatarPath = data.path;
         const img = document.getElementById('user-avatar');
 
         if (avatarPath) {
             img.src = avatarPath;
         } else {
-            img.src = '/images/default-avatar.jpg';
+            img.src = 'images/default-avatar.jpg';
         }
     }
 }
