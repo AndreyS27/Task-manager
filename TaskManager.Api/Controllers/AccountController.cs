@@ -28,7 +28,7 @@ namespace TaskManager.Api.Controllers
             return Ok(avatarPath);
         }
 
-        [HttpGet]
+        [HttpGet("avatar")]
         public async Task<ActionResult<string>> GetAvatarUrl()
         {
             var userId = GetUserId();
