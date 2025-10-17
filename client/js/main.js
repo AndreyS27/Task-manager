@@ -176,6 +176,7 @@ function showApp() {
     document.getElementById('auth-form').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     document.getElementById('user-email').textContent = localStorage.getItem('email');
+    loadAvatar();
     loadTasks();
 }
 
@@ -200,6 +201,24 @@ async function loadTasks() {
                 <button class='delete-todo'>Удалить</button>
             </div>`
         ).join('');
+    }
+}
+
+async function loadAvatar() {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${API_BASE}/account/avatar`, {
+        headers: { 'Authorization': `Bearer ${token}`}
+    });
+
+    if (res.ok) {
+        const avatarPath = await res.json(); // путь или null
+        const img = document.getElementById('user-avatar');
+
+        if (avatarPath) {
+            img.src = avatarPath;
+        } else {
+            img.src = '/images/default-avatar.jpg';
+        }
     }
 }
 
