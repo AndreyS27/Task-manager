@@ -29,11 +29,34 @@ namespace TaskManager.Api.Controllers
         }
 
         [HttpGet("avatar")]
-        public async Task<ActionResult<string>> GetAvatarUrl()
+        public async Task<ActionResult<string?>> GetAvatarUrl()
         {
             var userId = GetUserId();
             var avatarPath = await _accountService.GetAvatarPathAsync(userId);
-            return avatarPath;
+
+            ////test
+            ////if (avatarPath == null)
+            ////{
+            ////    return Ok((string?)null); 
+            ////}
+            //return Ok("test");
+
+            //return Ok(avatarPath);
+
+            //try
+            //{
+            //    var userId = GetUserId();
+            //    var avatarPath = await _accountService.GetAvatarPathAsync(userId);
+            //    return Ok(avatarPath);
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Логирование (временно)
+            //    Console.WriteLine($"Error: {ex.Message}");
+            //    return StatusCode(500, "Internal error");
+            //}
+
+            return Ok(new { avatarPath });
         }
 
         private int GetUserId()

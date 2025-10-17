@@ -32,6 +32,7 @@ builder.Services.Configure<JwtSettings>(jwtSettings);
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<PasswordService>();
 builder.Services.AddScoped<ITodoService, TodoService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();

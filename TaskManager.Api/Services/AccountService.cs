@@ -46,7 +46,7 @@ namespace TaskManager.Api.Services
             return urlPath;
         }
 
-        public async Task<string>? GetAvatarPathAsync(int userId)
+        public async Task<string?> GetAvatarPathAsync(int userId)
         {
             var user = await _context.Users.FindAsync(userId);
             return user?.AvatarPath;
