@@ -28,6 +28,14 @@ namespace TaskManager.Api.Controllers
             return Ok(avatarPath);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<string>> GetAvatarUrl()
+        {
+            var userId = GetUserId();
+            var avatarPath = await _accountService.GetAvatarPathAsync(userId);
+            return avatarPath;
+        }
+
         private int GetUserId()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
