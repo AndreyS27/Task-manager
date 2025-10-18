@@ -17,7 +17,7 @@ namespace TaskManager.Api.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost]
+        [HttpPost("avatar")]
         public async Task<ActionResult<string>> UploadAvatar(IFormFile file)
         {
             if (file == null || file.Length == 0)
