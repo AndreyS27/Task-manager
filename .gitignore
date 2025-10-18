@@ -482,4 +482,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-wwwroot/uploads
+wwwroot/uploads/avatars/*
+/TaskManager.Api/wwwroot/uploads/avatars/5f61dccb-18c0-4a53-8fba-29a2fb41ba9f.png

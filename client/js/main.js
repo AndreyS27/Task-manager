@@ -42,6 +42,41 @@ document.getElementById('register-btn').addEventListener('click', async () => {
     }
 });
 
+// Кнопка добавления аватара
+// При клике на кнопку - эмулируем клик по input
+document.getElementById('upload-avatar').addEventListener('click', () => {
+    document.getElementById('avatar-input').click();
+})
+
+document.getElementById('avatar-input').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+        alert('Выберите изображение! (jpeg, png, gif и т.д.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${API_BASE}/account/avatar`, {
+        method: 'POST',
+        headers: {'Authorization': `Bearer ${token}`},
+        body: formData
+    });
+
+    if (res.ok) {
+        alert('Аватар успешно загружен');
+        loadAvatar();
+    } else {
+        alert('Ошибка загрузки аватара');
+    }
+
+    e.target.value = '';
+});
+
 // Показать модальное окно добавления задачи
 document.getElementById('add-task').addEventListener('click', () => {
     document.getElementById('add-task-modal').style.display = 'block';
@@ -171,7 +206,6 @@ document.getElementById('save-changes').addEventListener('click', async () => {
     }
 })
 
-
 function showApp() {
     document.getElementById('auth-form').style.display = 'none';
     document.getElementById('app').style.display = 'block';
@@ -212,11 +246,11 @@ async function loadAvatar() {
 
     if (res.ok) {
         const data = await res.json(); // путь или null
-        const avatarPath = data.path;
+        const avatarPath = data.avatarPath;
         const img = document.getElementById('user-avatar');
 
         if (avatarPath) {
-            img.src = avatarPath;
+            img.src = `https://localhost:7037/${avatarPath}`;
         } else {
             img.src = 'images/default-avatar.jpg';
         }

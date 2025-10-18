@@ -5,8 +5,8 @@
 
 header{
     display: flex;
-    /* align-items: end; */
-    /* justify-content: ; */
+    justify-content: left;
+    align-items: center;
 }
 
 .todo-container{
@@ -66,12 +66,21 @@ header{
 }
 
 .avatar{
-    width: 100px;
+    display: flex;
+    flex-direction: column;
+    width: 10%;
     height: 100%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    margin: 1%;
 }
 
 #user-avatar{
     width: 100%;
     height: 100%;
+}
+
+
+
+#logout{
+    margin: 1%;
 }
