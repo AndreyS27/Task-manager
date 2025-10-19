@@ -484,3 +484,4 @@ $RECYCLE.BIN/
 *.swp
 wwwroot/uploads/avatars/*
 /TaskManager.Api/wwwroot/uploads/avatars/5f61dccb-18c0-4a53-8fba-29a2fb41ba9f.png
+/TaskManager.Api/wwwroot/uploads/avatars

@@ -229,10 +229,12 @@ async function loadTasks() {
         tasksList.innerHTML = tasks.map(t =>
             `<div class='todo-container' data-id="${t.id}">
                 <strong>${t.title}</strong> 
-                ${t.description || ''} <br>
-                ${t.isCompleted ? 'Выполнено' : 'Выполняется'}
-                <button class='update-todo'>Изменить</button>
-                <button class='delete-todo'>Удалить</button>
+                <p>${t.description || ''}</p>
+                ${t.isCompleted ? 
+                    '<p style="color: green">Выполнено</p>' 
+                    : '<p style="color: orange">Выполняется</p>'}
+                <button class="custom-btn update-todo">Изменить</button>
+                <button class="custom-btn delete-todo">Удалить</button>
             </div>`
         ).join('');
     }

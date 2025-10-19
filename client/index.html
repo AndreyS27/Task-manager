@@ -9,14 +9,20 @@
 <body>
     <div id="auth-form" class="auth-form">
         <h2>Вход / Регистрация</h2>
-        <label for="email">Почта</label>
-        <input type="email" id="email">
+        <div class="email">
+            <label for="email">Почта</label>
+            <input type="email" id="email">
+        </div>
 
-        <label for="password">Пароль</label>
-        <input type="password" id="password">
+        <div class="password">
+            <label for="password">Пароль</label>
+            <input type="password" id="password">
+        </div>
 
-        <button id="login-btn">Войти</button>
-        <button id="register-btn">Зарегистрироваться</button>
+        <div class="auth-form-btns">
+            <button class="custom-btn" id="login-btn">Войти</button>
+            <button class="custom-btn" id="register-btn">Зарегистрироваться</button>
+        </div>
     </div>
 
     <!-- Основной интерфейс -->
@@ -24,18 +30,20 @@
         <header>
             <div class="avatar">
                 <img id="user-avatar" alt="">
-                <button id="upload-avatar">Загрузить аватар</button>
+                <button class="custom-btn" id="upload-avatar">Загрузить аватар</button>
                 <!-- Скрытый input для выбора файла -->
                 <input type="file" id="avatar-input" accept="image/*" style="display: none;" />
             </div>
             <h1>Пользователь: <span id="user-email"></span></h1>
-            <button id="logout">Выйти</button>
+            <button class="custom-btn" id="logout">Выйти</button>
         </header>
         <hr>
         <main>
-            <button id="add-task">Добавить задачу</button>
-            <div id="tasks-list">
-
+            <div class="main-container">
+                <button class="custom-btn" id="add-task">Добавить задачу</button>
+                <div class="tasks-list" id="tasks-list">
+                
+                </div>
             </div>
         </main>
     </div>
