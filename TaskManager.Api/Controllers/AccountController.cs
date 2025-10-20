@@ -34,28 +34,6 @@ namespace TaskManager.Api.Controllers
             var userId = GetUserId();
             var avatarPath = await _accountService.GetAvatarPathAsync(userId);
 
-            ////test
-            ////if (avatarPath == null)
-            ////{
-            ////    return Ok((string?)null); 
-            ////}
-            //return Ok("test");
-
-            //return Ok(avatarPath);
-
-            //try
-            //{
-            //    var userId = GetUserId();
-            //    var avatarPath = await _accountService.GetAvatarPathAsync(userId);
-            //    return Ok(avatarPath);
-            //}
-            //catch (Exception ex)
-            //{
-            //    // Логирование (временно)
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //    return StatusCode(500, "Internal error");
-            //}
-
             return Ok(new { avatarPath });
         }
 
