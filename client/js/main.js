@@ -228,7 +228,10 @@ async function loadTasks() {
     } else {
         tasksList.innerHTML = tasks.map(t =>
             `<div class='todo-container' data-id="${t.id}">
-                <strong>${t.title}</strong> 
+                <div class='todo-header'>
+                    <h4>${t.title}</h4>
+                    Дата создания - ${formatDateTime(t.createdAt)}
+                </div>
                 <p>${t.description || ''}</p>
                 ${t.isCompleted ? 
                     '<p style="color: green">Выполнено</p>' 
@@ -238,6 +241,16 @@ async function loadTasks() {
             </div>`
         ).join('');
     }
+}
+
+function formatDateTime(str) {
+    const date = new Date(str);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}, ${hours}:${minutes}`;
 }
 
 async function loadAvatar() {
