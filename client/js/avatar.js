@@ -13,6 +13,12 @@ export function initAvatar() {
     }
 }
 
+export function clearAvatar() {
+    if (currentAvatarImg){
+        currentAvatarImg.src = 'images/default-avatar.jpg';
+    }
+}
+
 async function handleFileSelect(e) {
     const file = e.target.files[0];
     if (!file) return;

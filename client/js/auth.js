@@ -1,4 +1,4 @@
-import { loadAvatar } from "./avatar.js";
+import { loadAvatar, clearAvatar } from "./avatar.js";
 import { loadTasks, clearTasks } from "./tasks.js";
 import { API_BASE } from "./utils.js";
 
@@ -51,6 +51,7 @@ async function register() {
 function logout() {
     localStorage.clear();
     clearTasks();
+    clearAvatar();
     document.getElementById('app').style.display = 'none';
     document.getElementById('auth-form').style.display = 'flex';
 }
