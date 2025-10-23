@@ -9,6 +9,7 @@ export function initAuth() {
 }
 
 async function login() {
+    if (!validateAuthInputs()) return;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
@@ -24,11 +25,14 @@ async function login() {
         localStorage.setItem('email', data.email);
         showApp();
     } else {
-        alert('Ошибка входа');
+        // alert('Ошибка входа');
+        const ex = await res.text();
+        document.getElementById('invalid-credentials-err').textContent = ex;
     }
 }
 
 async function register() {
+    if (!validateAuthInputs()) return;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
@@ -44,7 +48,8 @@ async function register() {
         localStorage.setItem('email', data.email);
         showApp();
     } else {
-        alert('Ошибка регистрации');
+        const ex = await res.text();
+        document.getElementById('user-exist-err').textContent = ex;
     }
 }
 
@@ -54,6 +59,39 @@ function logout() {
     clearAvatar();
     document.getElementById('app').style.display = 'none';
     document.getElementById('auth-form').style.display = 'flex';
+}
+
+function validateAuthInputs() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    document.getElementById('invalid-credentials-err').textContent='';
+    document.getElementById('user-exist-err').textContent = '';
+
+    // валидация почты
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+        document.getElementById('invalid-credentials-err').textContent = 'Email обязателен';
+        return false;
+    }
+
+    if (!emailRegex.test(email)){
+        document.getElementById('invalid-credentials-err').textContent = 'Некорректный email';
+        return false;
+    }
+
+    // валидация пароля
+    if (!password) {
+        document.getElementById('invalid-credentials-err').textContent = 'Пароль обязателен';
+        return false;
+    }
+
+    if (password.length < 6) {
+        document.getElementById('invalid-credentials-err').textContent = 'Пароль должен быть не короче 6 символов';
+        return false;
+    }
+
+    return true;
 }
 
 export function showApp() {
