@@ -131,3 +131,7 @@ header{
 .delete-todo{
     color: red;
 }
+
+.error-handler{
+    color: red;
+}
