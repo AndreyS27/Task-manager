@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список задач</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="auth-form" class="auth-form">
+        <h2>Вход / Регистрация</h2>
+        <div class="email">
+            <label for="email">Почта</label>
+            <input type="email" id="email" placeholder="user@example.com">
+        </div>
+        <div class="password">
+            <label for="password">Пароль</label>
+            <input type="password" id="password">
+        </div>
+        <div class="error-handler" >
+            <label for="email" id="invalid-credentials-err"></label>
+            <label for="email" id="user-exist-err"></label>
+        </div>
+        <div class="auth-form-btns">
+            <button class="custom-btn" id="login-btn">Войти</button>
+            <button class="custom-btn" id="register-btn">Зарегистрироваться</button>
+        </div>
+    </div>
+
+    <!-- Основной интерфейс -->
+    <div id="app" style="display: none;">
+        <header>
+            <div class="avatar">
+                <img id="user-avatar" alt="">
+                <button class="custom-btn" id="upload-avatar">Загрузить аватар</button>
+                <!-- Скрытый input для выбора файла -->
+                <input type="file" id="avatar-input" accept="image/*" style="display: none;" />
+            </div>
+            <h1>Пользователь: <span id="user-email"></span></h1>
+            <button class="custom-btn" id="logout">Выйти</button>
+        </header>
+        <hr>
+        <main>
+            <div class="main-container">
+                <button class="custom-btn" id="add-task">Добавить задачу</button>
+                <div class="tasks-list" id="tasks-list">
+                
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Модальное окно для добавления задачи -->
+     <div id="add-task-modal">
+        <div class="add-task-fields">
+            <h3>Добавить задачу</h3>
+            <label for="new-task-title">Название задачи</label>
+            <input type="text" id="new-task-title" required>
+            <label for="new-task-description">Описание (необязательно)</label>
+            <textarea id="new-task-description" rows="3"></textarea>
+            <button id="save-task">Добавить задачу</button>
+            <button id="cancel-add">Отмена</button>
+        </div>
+     </div>
+
+     <!-- Модальное окно для обновления задачи -->
+      <div id="change-task-modal">
+        <div class="change-task-fields">
+            <h3>Изменить данные задачи</h3>
+            <label for="updated-title">Название задачи</label>
+            <input type="text" id="updated-title" required>
+            <label for="updated-description">Описание (необязательно)</label>
+            <textarea id="updated-description" rows="3"></textarea>
+            <label for="task-status">Выполнено</label>
+            <input type="checkbox" id="task-status">
+            <button id="save-changes">Сохранить</button>
+            <button id="cancel-changes">Отмена</button>
+        </div>
+      </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

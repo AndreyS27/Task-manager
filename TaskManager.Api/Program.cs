@@ -93,6 +93,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("AllowLocalHost5500");
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseAuthentication();

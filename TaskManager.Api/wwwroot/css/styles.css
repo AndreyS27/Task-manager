@@ -1,0 +1,137 @@
+body{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.auth-form{
+    display: flex;
+    flex-direction: column;
+    border: 1px rgb(112, 107, 156) solid;
+    border-radius: 3%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1%;
+}
+
+header{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.main-container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 2%;
+}
+
+.todo-container{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(130, 147, 179);
+    border-radius: 15px;
+    /* margin: 3%; */
+    margin-bottom: 3%;
+    padding: 1%;
+}
+
+#add-task-modal{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.add-task-fields{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    width: 300px;
+}
+
+#change-task-modal{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.change-task-fields{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    width: 300px;
+}
+
+.avatar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 10%;
+    height: 100%;
+    /* border: 1px solid black; */
+    margin: 1%;
+}
+
+#user-avatar{
+    width: 100%;
+    height: 100%;
+}
+
+#logout{
+    margin: 1%;
+}
+
+.custom-btn{
+    border: none;
+    background-color: white;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: fit-content;
+    text-decoration: underline;
+    font-size: 15px;
+}
+
+.custom-btn:hover{
+    cursor: pointer;
+    color: rgb(139, 136, 136);
+}
+
+.email, .password{
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form-btns{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.delete-todo{
+    color: red;
+}
+
+.error-handler{
+    color: red;
+}
